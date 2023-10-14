@@ -251,7 +251,8 @@ class BaseModel:
         
         return id_map
 
-    def convert_to_model_profile_categories(self, x):
+    # def convert_to_model_profile_categories(self, x):
+    #     pass
 
 
     def _get_leaf_ids(self, x):
