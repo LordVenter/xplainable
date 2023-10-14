@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 from pandas.api.types import is_bool_dtype
+from typing import Dict, List, Any
 
 
 class BaseModel:
@@ -369,6 +370,22 @@ class BasePartition:
     def __init__(self):
         self.partition_on = None
         self.partitions = {}
+
+    @property
+    def feature_importances(self) -> Dict[Any, List[float]]:
+        """ Calculates the feature importances for all the partitioned models' decision processes.
+
+        Returns:
+            dict: The feature importances.
+        """
+        base_feature_importance = self.partitions['__dataset__'].feature_importances
+        for feature_name, f_i in base_feature_importance.items():
+            base_feature_importance[feature_name] = [f_i]
+        for partition in [p[1] for p in self.partitions.items() if p[0] != '__dataset__']:  # parts that are not default
+            for feature_name, f_i in base_feature_importance.items():
+                base_feature_importance[feature_name].append(partition[feature_name])
+
+        return base_feature_importance
 
     def __verify_mappings(self, model):
         assert model.target_map == self.partitions['__dataset__'].target_map, \
