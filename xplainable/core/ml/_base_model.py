@@ -271,7 +271,7 @@ class BaseModel:
             p = np.array(p)
             _key = "numeric" if c in self.numeric_columns else "categorical"
 
-            if len(p) < 2:
+            if len(p) < 1:
                 profile[_key][c] = []
                 continue
 
