@@ -237,6 +237,8 @@ class XConstructor:
                     elif _direction == 1:
                         _lower = _split_path
 
+                _freq /= self.samples
+
                 # score at end to persist non-normalised score
                 _nodes.append([_lower, _upper, score, _mean, _freq, score])
 
@@ -273,8 +275,8 @@ class XConstructor:
             _0_dir = np.hstack((_dir, np.array([0])))
             _1_dir = np.hstack((_dir, np.array([1])))
 
-            _0_freq = _s_meta[0][0] / self.samples
-            _1_freq = _s_meta[1][0] / self.samples
+            _0_freq = _s_meta[0][0]  # / self.samples
+            _1_freq = _s_meta[1][0]  # / self.samples
 
             _0_node = [
                 _0_meta,
